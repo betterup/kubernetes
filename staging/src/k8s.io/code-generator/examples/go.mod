@@ -12,7 +12,6 @@ require (
 )
 
 replace (
-	github.com/golang-jwt/jwt/v4 => github.com/golang-jwt/jwt/v4 v4.5.0
 	k8s.io/api => ../../api
 	k8s.io/apimachinery => ../../apimachinery
 	k8s.io/client-go => ../../client-go
