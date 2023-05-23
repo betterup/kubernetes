@@ -1832,7 +1832,7 @@ ConfigMap rendering [issue](https://github.com/kubernetes/kubernetes/issues/1120
 - github.com/emicklei/go-restful/v3: [v3.8.0](https://github.com/emicklei/go-restful/v3/tree/v3.8.0)
 - github.com/go-task/slim-sprig: [348f09d](https://github.com/go-task/slim-sprig/tree/348f09d)
 - github.com/gogo/googleapis: [v1.4.1](https://github.com/gogo/googleapis/tree/v1.4.1)
-- github.com/golang-jwt/jwt/v4: [v4.2.0](https://github.com/golang-jwt/jwt/v4/tree/v4.2.0)
+- github.com/golang-jwt/jwt/v4: [v4.5.0](https://github.com/golang-jwt/jwt/v4/tree/v4.5.0)
 - github.com/golang/snappy: [v0.0.3](https://github.com/golang/snappy/tree/v0.0.3)
 - github.com/golangplus/bytes: [v1.0.0](https://github.com/golangplus/bytes/tree/v1.0.0)
 - github.com/golangplus/fmt: [v1.0.0](https://github.com/golangplus/fmt/tree/v1.0.0)
@@ -2824,7 +2824,7 @@ name | architectures
 
 ### Added
 - github.com/emicklei/go-restful/v3: [v3.8.0](https://github.com/emicklei/go-restful/v3/tree/v3.8.0)
-- github.com/golang-jwt/jwt/v4: [v4.2.0](https://github.com/golang-jwt/jwt/v4/tree/v4.2.0)
+- github.com/golang-jwt/jwt/v4: [v4.5.0](https://github.com/golang-jwt/jwt/v4/tree/v4.5.0)
 - github.com/golangplus/bytes: [v1.0.0](https://github.com/golangplus/bytes/tree/v1.0.0)
 - github.com/golangplus/fmt: [v1.0.0](https://github.com/golangplus/fmt/tree/v1.0.0)
 
