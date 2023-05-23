@@ -126,28 +126,19 @@ func (m MapClaims) Valid() error {
 	now := TimeFunc().Unix()
 
 	if !m.VerifyExpiresAt(now, false) {
-<<<<<<< HEAD
 		// TODO(oxisto): this should be replaced with ErrTokenExpired
-=======
->>>>>>> parent of e7a81adadb3 (removed all traces of golang-jwt v4.2.0 from the branch)
 		vErr.Inner = errors.New("Token is expired")
 		vErr.Errors |= ValidationErrorExpired
 	}
 
 	if !m.VerifyIssuedAt(now, false) {
-<<<<<<< HEAD
 		// TODO(oxisto): this should be replaced with ErrTokenUsedBeforeIssued
-=======
->>>>>>> parent of e7a81adadb3 (removed all traces of golang-jwt v4.2.0 from the branch)
 		vErr.Inner = errors.New("Token used before issued")
 		vErr.Errors |= ValidationErrorIssuedAt
 	}
 
 	if !m.VerifyNotBefore(now, false) {
-<<<<<<< HEAD
 		// TODO(oxisto): this should be replaced with ErrTokenNotValidYet
-=======
->>>>>>> parent of e7a81adadb3 (removed all traces of golang-jwt v4.2.0 from the branch)
 		vErr.Inner = errors.New("Token is not valid yet")
 		vErr.Errors |= ValidationErrorNotValidYet
 	}
