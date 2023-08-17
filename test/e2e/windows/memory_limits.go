@@ -42,7 +42,7 @@ import (
 var _ = SIGDescribe("[Feature:Windows] Memory Limits [Serial] [Slow]", func() {
 
 	f := framework.NewDefaultFramework("memory-limit-test-windows")
-	f.NamespacePodSecurityEnforceLevel = admissionapi.LevelPrivileged
+	f.NamespacePodSecurityLevel = admissionapi.LevelPrivileged
 
 	ginkgo.BeforeEach(func() {
 		// NOTE(vyta): these tests are Windows specific
@@ -168,7 +168,7 @@ func overrideAllocatableMemoryTest(ctx context.Context, f *framework.Framework, 
 			}
 		}
 		return false
-	}, 3*time.Minute, 10*time.Second).Should(gomega.Equal(true))
+	}, 3*time.Minute, 10*time.Second).Should(gomega.BeTrue())
 
 }
 
@@ -182,7 +182,7 @@ func getNodeMemory(ctx context.Context, f *framework.Framework) nodeMemory {
 
 	// Assuming that agent nodes have the same config
 	// Make sure there is >0 agent nodes, then use the first one for info
-	gomega.Expect(nodeList).To(gomega.BeEmpty())
+	gomega.Expect(nodeList.Items).ToNot(gomega.BeEmpty())
 
 	ginkgo.By("Getting memory details from node status and kubelet config")
 	status := nodeList.Items[0].Status

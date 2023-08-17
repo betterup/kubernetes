@@ -228,10 +228,34 @@ func TestStringLibrary(t *testing.T) {
 			expectRuntimeCost:  3,
 		},
 		{
+			name:               "lowerAsciiEquals",
+			expr:               "'ABCDEFGHIJ abcdefghij'.lowerAscii() == 'abcdefghij ABCDEFGHIJ'.lowerAscii()",
+			expectEsimatedCost: checker.CostEstimate{Min: 7, Max: 9},
+			expectRuntimeCost:  9,
+		},
+		{
 			name:               "upperAscii",
 			expr:               "'ABCDEFGHIJ abcdefghij'.upperAscii()",
 			expectEsimatedCost: checker.CostEstimate{Min: 3, Max: 3},
 			expectRuntimeCost:  3,
+		},
+		{
+			name:               "upperAsciiEquals",
+			expr:               "'ABCDEFGHIJ abcdefghij'.upperAscii() == 'abcdefghij ABCDEFGHIJ'.upperAscii()",
+			expectEsimatedCost: checker.CostEstimate{Min: 7, Max: 9},
+			expectRuntimeCost:  9,
+		},
+		{
+			name:               "quote",
+			expr:               "strings.quote('ABCDEFGHIJ abcdefghij')",
+			expectEsimatedCost: checker.CostEstimate{Min: 3, Max: 3},
+			expectRuntimeCost:  3,
+		},
+		{
+			name:               "quoteEquals",
+			expr:               "strings.quote('ABCDEFGHIJ abcdefghij') == strings.quote('ABCDEFGHIJ abcdefghij')",
+			expectEsimatedCost: checker.CostEstimate{Min: 7, Max: 11},
+			expectRuntimeCost:  9,
 		},
 		{
 			name:               "replace",
@@ -348,6 +372,18 @@ func TestAuthzLibrary(t *testing.T) {
 		{
 			name:                "resource check reason",
 			expr:                "authorizer.group('apps').resource('deployments').subresource('status').namespace('test').name('backend').check('create').allowed()",
+			expectEstimatedCost: checker.CostEstimate{Min: 350007, Max: 350007},
+			expectRuntimeCost:   350007,
+		},
+		{
+			name:                "resource check errored",
+			expr:                "authorizer.group('apps').resource('deployments').subresource('status').namespace('test').name('backend').check('create').errored()",
+			expectEstimatedCost: checker.CostEstimate{Min: 350007, Max: 350007},
+			expectRuntimeCost:   350007,
+		},
+		{
+			name:                "resource check error",
+			expr:                "authorizer.group('apps').resource('deployments').subresource('status').namespace('test').name('backend').check('create').error()",
 			expectEstimatedCost: checker.CostEstimate{Min: 350007, Max: 350007},
 			expectRuntimeCost:   350007,
 		},
