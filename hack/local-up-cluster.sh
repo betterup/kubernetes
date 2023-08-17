@@ -47,6 +47,8 @@ CGROUP_DRIVER=${CGROUP_DRIVER:-""}
 CGROUP_ROOT=${CGROUP_ROOT:-""}
 # owner of client certs, default to current user if not specified
 USER=${USER:-$(whoami)}
+# if true, limited swap is being used instead of unlimited swap (default)
+LIMITED_SWAP=${LIMITED_SWAP:-""}
 
 # required for cni installation
 CNI_CONFIG_DIR=${CNI_CONFIG_DIR:-/etc/cni/net.d}
@@ -186,10 +188,10 @@ do
     esac
 done
 
-if [ -z "${GO_OUT:-$(guess_built_binary_path)}" ]; then
+if [ -z "${GO_OUT}" ]; then
     make -C "${KUBE_ROOT}" WHAT="cmd/kubectl cmd/kube-apiserver cmd/kube-controller-manager cmd/cloud-controller-manager cmd/kubelet cmd/kube-proxy cmd/kube-scheduler"
 else
-    echo "skipped the build as we found existing binaries in $(guess_built_binary_path)"
+    echo "skipped the build because GO_OUT was set (${GO_OUT})"
 fi
 
 # Shut down anyway if there's an error.
@@ -685,6 +687,10 @@ function wait_node_ready(){
   local system_node_wait_time=60
   local interval_time=2
   kube::util::wait_for_success "$system_node_wait_time" "$interval_time" "$nodes_stats | grep $node_name"
+  if [ $? == "1" ]; then
+    echo "time out on waiting $node_name exist"
+    exit 1
+  fi
 
   local system_node_ready_time=300
   local node_ready="${KUBECTL} --kubeconfig '${CERT_DIR}/admin.kubeconfig' wait --for=condition=Ready --timeout=60s nodes $node_name"
@@ -825,6 +831,13 @@ EOF
 tracing:
   endpoint: localhost:4317 # the default value
   samplingRatePerMillion: 1000000 # sample always
+EOF
+    fi
+
+    if [[ "$LIMITED_SWAP" == "true" ]]; then
+        cat <<EOF >> "${TMP_DIR}"/kubelet.yaml
+memorySwap:
+  swapBehavior: LimitedSwap
 EOF
     fi
 
